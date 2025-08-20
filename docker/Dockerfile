@@ -1,5 +1,6 @@
 # Using base image instead of Ubuntu
-FROM iamteacher/blog_15min.base:latest
+# FROM iamteacher/blog_15min.base:latest
+FROM dimazyablicev/blog_15min.base:latest
 
 # Working directory
 WORKDIR /app

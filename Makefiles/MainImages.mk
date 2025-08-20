@@ -2,7 +2,8 @@
 # Main image (using base image)
 # ===============================================================
 MAIN_DOCKERFILE = docker/Dockerfile
-MAIN_IMAGE_NAME = iamteacher/blog_15min
+# MAIN_IMAGE_NAME = iamteacher/blog_15min
+MAIN_IMAGE_NAME = dimazyablicev/blog_15min.base
 
 # Build main image for ARM64
 build-main-arm64:
@@ -13,28 +14,28 @@ build-main-arm64:
 		.
 
 # Build main image for AMD64
+# 		-t $(MAIN_IMAGE_NAME):amd64
 build-main-amd64:
 	docker build \
-		-t $(MAIN_IMAGE_NAME):amd64 \
+		-t $(MAIN_IMAGE_NAME):latest \
 		-f $(MAIN_DOCKERFILE) \
 		--platform linux/amd64 \
 		.
 
 # Build main images for all platforms
 build-main-all:
-	make build-main-arm64
 	make build-main-amd64
 
 # Create manifest for main image
-create-main-manifest:
-	docker manifest create \
-		$(MAIN_IMAGE_NAME):latest \
-		--amend $(MAIN_IMAGE_NAME):arm64 \
-		--amend $(MAIN_IMAGE_NAME):amd64
+# create-main-manifest:
+# 	docker manifest create \
+# 		$(MAIN_IMAGE_NAME):latest \
+# 		--amend $(MAIN_IMAGE_NAME):arm64 \
+# 		--amend $(MAIN_IMAGE_NAME):amd64
 
 # Push main images to Docker Hub
 push-main-images:
-	docker push $(MAIN_IMAGE_NAME):arm64
+# 	docker push $(MAIN_IMAGE_NAME):arm64
 	docker push $(MAIN_IMAGE_NAME):amd64
 
 # Push main image manifest to Docker Hub
@@ -46,7 +47,7 @@ push-main-manifest:
 update-main-images:
 	make build-main-all
 	make push-main-images
-	make create-main-manifest
+# 	make create-main-manifest
 	make push-main-manifest
 	@echo "Main images built and published successfully!"
 
@@ -89,7 +90,7 @@ clean-main-images:
 	@echo "Cleaning main images..."
 	@echo "Removing tagged images..."
 	-docker rmi $(MAIN_IMAGE_NAME):arm64 $(MAIN_IMAGE_NAME):amd64 $(MAIN_IMAGE_NAME):latest
-	@echo "Main images cleanup completed!" 
+	@echo "Main images cleanup completed!"
 
 # Help for main image building commands
 help-main-image:
@@ -99,7 +100,7 @@ help-main-image:
 	@echo "  make build-main-arm64     - Build main image for ARM64"
 	@echo "  make build-main-amd64     - Build main image for AMD64"
 	@echo "  make build-main-all       - Build main image for all platforms"
-	@echo "  make create-main-manifest - Create manifest for main image"
+# 	@echo "  make create-main-manifest - Create manifest for main image"
 	@echo "  make push-main-images     - Push main images to Docker Hub"
 	@echo "  make push-main-manifest   - Push manifest to Docker Hub"
 	@echo "  make update-main-images   - Build, push images and manifest"

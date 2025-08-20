@@ -1,6 +1,8 @@
 # Variables for building images
 DOCKERFILE = docker/_Base.Dockerfile
-IMAGE_NAME = iamteacher/blog_15min.base
+# IMAGE_NAME = iamteacher/blog_15min.base
+IMAGE_NAME = dimazyablicev/blog_15min.base
+
 
 # Ruby version and OS version for the base image
 RUBY_VERSION = 3.4.3-bookworm
